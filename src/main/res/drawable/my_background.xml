@@ -1,0 +1,9 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Blue still showing up! -->
+    <item android:state_activated="true" android:drawable="@color/lightPink" />
+    <item android:state_selected="true" android:drawable="@color/lightPink" />
+    <item android:state_pressed="true" android:drawable="@color/lightPink" />
+    <item android:state_focused="true" android:drawable="@color/lightPink" />
+    <item android:drawable="@color/lightPink" />
+
+</selector>

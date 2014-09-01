@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+    <TextView
+        android:id="@+id/nameTxt1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="55dp"
+        android:textStyle="bold"
+        android:gravity="center|bottom"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:background="@color/pink"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/nameTxt2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:gravity="center|top"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:background="@color/white"
+        android:textColor="@color/pink" />
+
+    <TextView
+        android:id="@+id/nameTxt3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:gravity="center|top"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.6"
+        android:background="@color/white"
+        android:textColor="@color/pink" />
+
+</LinearLayout>

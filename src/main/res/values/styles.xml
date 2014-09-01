@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+    </style>
+
+    <style name="btnStylesorbus" parent="@android:style/Widget.Button">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:background">@drawable/custom_btn_sorbus</item>
+        <item name="android:padding">10dip</item>
+    </style>
+
+    <style name="customDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme"
+        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/pink</item>
+    </style>
+
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+
+
+    <!--<style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
+        <!--&lt;!&ndash; API 14 theme customizations can go here. &ndash;&gt;-->
+    <!--</style>-->
+
+
+</resources>

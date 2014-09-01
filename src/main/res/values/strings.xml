@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Snobka.pl czytnik</string>
+    <string name="title_section1">Czytnik</string>
+    <string name="title_section2">O aplikacji</string>
+    <string name="title_section3">Ustawienia</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Odśwież</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="rateNow">Oceń</string>
+    <string name="rateLater">Przypomnij później</string>
+    <string name="rateNever">Nie, dzięki</string>
+
+    <string name="rateTxt1">Jeśli podoba Ci się aplikacja</string>
+    <string name="rateTxt2"> poświęć chwilę i wystaw ocenę.\n\nDzięki!</string>
+
+    <string name="wkrotce">Nasz leniwy programista jeszcze tej opcji nie zaimplementował:(</string>
+
+    <string name="about1">Od autorów\n\n</string>
+    <string name="about2">Hej!\n\nAplikacja jest dopiero w fazie rozwoju,
+                          w związku z czym niektóre rzeczy mogą nie działać tak jak powinny.\n\n
+                          Dlatego prosimy was przede wszystkim o cierpliwość i opinie,
+                          które na pewno uwzględnimy w procesie ulepszania aplikacji.\n\n</string>
+    <string name="about3">Czytnik nie jest oficjalną aplikacją.
+                          Czytnik jest darmowym oprogramowaniem stworzonym przez fanów serwisu Snobka.pl
+                          dla fanów tegoż serwisu.\n\n</string>
+
+</resources>
