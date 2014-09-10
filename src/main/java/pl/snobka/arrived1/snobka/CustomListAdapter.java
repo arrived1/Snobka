@@ -3,6 +3,7 @@ package pl.snobka.arrived1.snobka;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         convertView = inflater.inflate(layoutResourceId, parent, false);
 
@@ -40,6 +42,11 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
         TextView summary = (TextView)convertView.findViewById(R.id.txtSummary);
 
         Entry entry = data.get(position);
+
+        //Log.d("DUPA", "Link: " + entry.getLink());
+        ArticleDownloader articleDownloader = new ArticleDownloader(entry.getLink(), convertView, R.id.imgIcon);
+        articleDownloader.execute();
+
         title.setText(entry.getTitle());
 
         if(isNewsFromToday(entry.getUpdated()))

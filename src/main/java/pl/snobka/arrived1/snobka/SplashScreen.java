@@ -5,10 +5,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -75,6 +82,38 @@ public class SplashScreen extends Activity {
             DBHandler dbHandler = new DBHandler(getApplicationContext());
             for(Entry entry : entryList)
                 dbHandler.addRecord(entry);
+
+
+
+
+//            Document doc = null;
+//
+////            for(Entry entry : dbHandler.getAllRecords()) {
+//
+//                try {
+//                    doc = Jsoup.connect(entryList.get(0).getLink()).get();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//                Element e = doc.body();
+//                Element res = e.select("div#intertext1").first();
+//                Elements elems = res.getAllElements();
+//
+
+
+//            for(int i = 0; i < elems.size(); i++) {
+//                Log.d("DUPA", "element link: " + elems.get(i).select("a[href]"));
+//                Log.d("DUPA", "element: " + elems.get(i).text());
+//            }
+//
+//                Log.d("DUPA", "\t\t\t\t\t\t\t\t\t\t\t\t\t!");
+////                Log.d("DUPA", entry.getLink());
+//                Log.d("DUPA", elems.get(0).text());
+////            }
+
+
 
             return null;
         }

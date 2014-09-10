@@ -253,6 +253,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
     /**
