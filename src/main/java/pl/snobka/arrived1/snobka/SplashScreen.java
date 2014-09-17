@@ -2,6 +2,9 @@ package pl.snobka.arrived1.snobka;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -79,9 +82,14 @@ public class SplashScreen extends Activity {
             RssParser parser = new RssParser();
             List<Entry> entryList = parser.parse(URL);
 
+
+            Bitmap img = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_launcher);
+
             DBHandler dbHandler = new DBHandler(getApplicationContext());
-            for(Entry entry : entryList)
+            for(Entry entry : entryList) {
+                entry.setImage(img);
                 dbHandler.addRecord(entry);
+            }
 
 
 

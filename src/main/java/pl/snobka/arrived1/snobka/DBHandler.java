@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1; // Database Version
+    private static final int DATABASE_VERSION = 2; // Database Version
     private static final String DATABASE_NAME = "rssReader"; // Database Name
     private static final String TABLE_NAME = "rssReaderNews"; // Contacts table name
 
@@ -24,6 +24,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_AUTHOR = Entry.AUTHOR;
     private static final String KEY_NEWSID = "newsid";
     private static final String KEY_SUMMARY = Entry.SUMMARY;
+    private static final String KEY_IMAGE = Entry.IMAGE;
+
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +40,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 KEY_UPDATED + " TEXT," +
                 KEY_AUTHOR + " TEXT," +
                 KEY_NEWSID + " TEXT," +
-                KEY_SUMMARY + " TEXT " + ")";
+                KEY_SUMMARY + " TEXT, " +
+                KEY_IMAGE + " BLOB " + ")";
 
         db.execSQL(CREATE_RSS_TABLE);
     }
@@ -57,6 +60,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_AUTHOR, entry.getAuthor());
         values.put(KEY_NEWSID, entry.getNewsId());
         values.put(KEY_SUMMARY, entry.getSummary());
+        values.put(KEY_IMAGE, entry.getImage());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -80,7 +84,8 @@ public class DBHandler extends SQLiteOpenHelper {
             do {
                 Entry record = new Entry(cursor.getString(1), cursor.getString(2),
                                          cursor.getString(3), cursor.getString(4),
-                                         cursor.getString(5), cursor.getString(6));
+                                         cursor.getString(5), cursor.getString(6),
+                                         cursor.getBlob(7));
                 recordList.add(record);
             } while (cursor.moveToNext());
         }
@@ -88,6 +93,16 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         return recordList;
+    }
+
+    public int updateImage(String newsId, byte[] image) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_IMAGE, image);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        int update = db.update(TABLE_NAME, values, KEY_NEWSID + " = ?", new String[] { newsId });
+        db.close();
+        return update;
     }
 
     public int updateRecord(Entry entry) {
@@ -98,6 +113,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_AUTHOR, entry.getAuthor());
         values.put(KEY_NEWSID, entry.getNewsId());
         values.put(KEY_SUMMARY, entry.getSummary());
+        values.put(KEY_IMAGE, entry.getImage());
 
         SQLiteDatabase db = this.getWritableDatabase();
         int update = db.update(TABLE_NAME, values, KEY_NEWSID + " = ?",
@@ -110,7 +126,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                new String[] {KEY_ID, KEY_TITLE, KEY_LINK, KEY_LINK, KEY_UPDATED, KEY_AUTHOR, KEY_NEWSID, KEY_SUMMARY },
+                new String[] {KEY_ID, KEY_TITLE, KEY_LINK, KEY_LINK, KEY_UPDATED, KEY_AUTHOR, KEY_NEWSID, KEY_SUMMARY, KEY_IMAGE },
                             KEY_ID + "=?",
                             new String[] { String.valueOf(id) },
                             null, null, null, null);
@@ -119,17 +135,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Entry site = new Entry(cursor.getString(1), cursor.getString(2),
                                cursor.getString(3), cursor.getString(4),
-                               cursor.getString(5), cursor.getString(6));
+                               cursor.getString(5), cursor.getString(6),
+                               cursor.getBlob(7));
         cursor.close();
         db.close();
         return site;
-    }
-
-    public void deleteRecord(Entry entry) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, KEY_ID + " = ?",
-                new String[] { String.valueOf(entry.getId())});
-        db.close();
     }
 
     public boolean isEntryExists(SQLiteDatabase db, String newsId) {
@@ -140,4 +150,10 @@ public class DBHandler extends SQLiteOpenHelper {
         return exists;
     }
 
+    public void deleteRecord(Entry entry) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, KEY_ID + " = ?",
+                new String[] { String.valueOf(entry.getId())});
+        db.close();
+    }
 }

@@ -32,8 +32,6 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         convertView = inflater.inflate(layoutResourceId, parent, false);
 
@@ -44,8 +42,8 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
         Entry entry = data.get(position);
 
         //Log.d("DUPA", "Link: " + entry.getLink());
-        ArticleDownloader articleDownloader = new ArticleDownloader(entry.getLink(), convertView, R.id.imgIcon);
-        articleDownloader.execute();
+        //ArticleDownloader articleDownloader = new ArticleDownloader(entry.getLink(), convertView, R.id.imgIcon);
+        //articleDownloader.execute();
 
         title.setText(entry.getTitle());
 
@@ -53,7 +51,8 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
             title.setTextColor(context.getResources().getColor(R.color.pink));
 
         summary.setText(Html.fromHtml(entry.getSummary()));
-        image.setImageResource(R.drawable.ic_launcher);
+        //image.setImageResource(R.drawable.ic_launcher);
+        image.setImageBitmap(entry.getBitmap());
 
         return convertView;
     }

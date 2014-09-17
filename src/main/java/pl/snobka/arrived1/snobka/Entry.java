@@ -1,5 +1,10 @@
 package pl.snobka.arrived1.snobka;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
+
 public class Entry {
     int id;
     String title;
@@ -9,6 +14,9 @@ public class Entry {
     String author;
     String newsId;
     String summary;
+    byte[] image;
+    Bitmap bitmap;
+    ByteArrayOutputStream bos;
 
     public static final String ID = "id";
     public static final String ENTRY = "entry";
@@ -18,6 +26,7 @@ public class Entry {
     public static final String AUTHOR = "author";
     public static final String NEWSID = "id";
     public static final String SUMMARY = "summary";
+    public static final String IMAGE = "image";
 
     Entry() {
         this.id = 0;
@@ -27,9 +36,12 @@ public class Entry {
         this.author = "";
         this.newsId = "";
         this.summary = "";
+        this.image = null;
+        this.bitmap = null;
+        this.bos = new ByteArrayOutputStream();
     }
 
-    Entry(String title, String link, String updated, String author, String newsId, String summary) {
+    Entry(String title, String link, String updated, String author, String newsId, String summary, byte[] image) {
         this.id = 0;
         this.title = title;
         this.link = link;
@@ -37,6 +49,24 @@ public class Entry {
         this.author = author;
         this.newsId = newsId;
         this.summary = summary;
+        this.image = image;
+        this.bitmap = BitmapFactory.decodeByteArray(this.image, 0, this.image.length);
+        this.bos = new ByteArrayOutputStream();
+    }
+
+    public Bitmap getBitmap() {
+        if(bitmap == null)
+            return BitmapFactory.decodeByteArray(this.image , 0, this.image.length);
+        return bitmap;
+    }
+
+    public byte[] getImage() { return image; }
+
+    public void setImage(Bitmap image) {
+        this.bitmap = image;
+
+        image.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        this.image = bos.toByteArray();
     }
 
     public String getLink() {

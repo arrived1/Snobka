@@ -53,10 +53,10 @@ public class ArticleDownloader extends AsyncTask<Void, Void, Void> {
                 picUrl = element.toString();
                 //Log.d("DUPA", picUrl);
                 if(picUrl.contains("snobka.article.sds.o2.pl")) {
-                    Log.d("DUPA", picUrl);
+                    //Log.d("DUPA", picUrl);
                     picUrl = element.absUrl("src");
-                    Log.d("DUPA", picUrl);
-                    Log.d("DUPA", "-------------------------------------------------------------------");
+                    //Log.d("DUPA", picUrl);
+                    //Log.d("DUPA", "-------------------------------------------------------------------");
                     break;
                 }
                 //Log.d("DUPA", "-------------------------------------------------------");
