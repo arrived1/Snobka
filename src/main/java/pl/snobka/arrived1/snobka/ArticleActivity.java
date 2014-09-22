@@ -5,6 +5,8 @@ import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 
@@ -25,6 +27,7 @@ public class ArticleActivity extends Activity {
         DBHandler dbHandler = new DBHandler(this);
         WebView webView = (WebView)findViewById(R.id.webView);
 
+        Log.d("DUPA", dbHandler.getRecord(item).getLink());
         webView.loadUrl(dbHandler.getRecord(item).getLink()); //recordy w bazie sa numerowane od 1
     }
 

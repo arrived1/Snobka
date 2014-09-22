@@ -6,8 +6,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -75,18 +77,20 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public List<Entry> getAllRecords() {
         List<Entry> recordList = new ArrayList<Entry>();
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY " + KEY_ID + " DESC";
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY " + KEY_ID + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase(); //getReadableDatabase
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Entry record = new Entry(cursor.getString(1), cursor.getString(2),
+                Entry record = new Entry(cursor.getString(0),
+                                         cursor.getString(1), cursor.getString(2),
                                          cursor.getString(3), cursor.getString(4),
                                          cursor.getString(5), cursor.getString(6),
                                          cursor.getBlob(7));
                 recordList.add(record);
+                //Log.d("DUPA", record.getId() + " " + record.getNewsId() + " " + record.getUpdated());
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -133,7 +137,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Entry site = new Entry(cursor.getString(1), cursor.getString(2),
+        Entry site = new Entry(cursor.getString(0), cursor.getString(1), cursor.getString(2),
                                cursor.getString(3), cursor.getString(4),
                                cursor.getString(5), cursor.getString(6),
                                cursor.getBlob(7));
@@ -142,12 +146,18 @@ public class DBHandler extends SQLiteOpenHelper {
         return site;
     }
 
-    public boolean isEntryExists(SQLiteDatabase db, String newsId) {
+    private boolean isEntryExists(SQLiteDatabase db, String newsId) {
 
         Cursor cursor = db.rawQuery("SELECT " + KEY_NEWSID + " FROM " + TABLE_NAME +
                                     " WHERE " + KEY_NEWSID + " = '" + newsId + "'", new String[] {});
         boolean exists = (cursor.getCount() > 0);
         return exists;
+    }
+
+    public boolean isEntryExists(String newsId) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        return isEntryExists(db, newsId);
     }
 
     public void deleteRecord(Entry entry) {

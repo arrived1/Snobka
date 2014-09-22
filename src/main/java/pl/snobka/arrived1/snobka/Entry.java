@@ -41,8 +41,8 @@ public class Entry {
         this.bos = new ByteArrayOutputStream();
     }
 
-    Entry(String title, String link, String updated, String author, String newsId, String summary, byte[] image) {
-        this.id = 0;
+    Entry(String id, String title, String link, String updated, String author, String newsId, String summary, byte[] image) {
+        this.id = Integer.parseInt(id);
         this.title = title;
         this.link = link;
         this.updated = updated;

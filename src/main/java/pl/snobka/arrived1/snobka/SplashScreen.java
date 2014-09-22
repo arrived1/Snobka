@@ -18,7 +18,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 
@@ -26,6 +30,8 @@ public class SplashScreen extends Activity {
     private Animation leftRight;
     private Animation rightLeft;
     private Animation downTop;
+    private String picUrl = null;
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +93,53 @@ public class SplashScreen extends Activity {
 
             DBHandler dbHandler = new DBHandler(getApplicationContext());
             for(Entry entry : entryList) {
-                entry.setImage(img);
-                dbHandler.addRecord(entry);
+
+                if(!dbHandler.isEntryExists(entry.getNewsId()))
+                {
+                    Bitmap bitmap = null;
+                    Document doc = null;
+                    Elements picLinks = null;
+                    try {
+                        doc = Jsoup.connect(entry.getLink()).get();
+                        picLinks = doc.select("img");
+
+                        for(Element element: picLinks) {
+                            picUrl = element.toString();
+                            //Log.d("DUPA", picUrl);
+                            if(picUrl.contains("snobka.article.sds.o2.pl")) {
+                                Log.d("DUPA", picUrl);
+                                picUrl = element.absUrl("src");
+                                //Log.d("DUPA", picUrl);
+                                //Log.d("DUPA", "-------------------------------------------------------------------");
+                                break;
+                            }
+                            Log.d("DUPA", "-------------------------------------------------------");
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Log.d("DUPA", "picture: " + picUrl);
+//                    Log.d("DUPA", "zaczynam sciagniete");
+                    bitmap = downloadBitmap(picUrl);
+//                    Log.d("DUPA", "skonczylem sciagniete");
+
+
+
+                    if(bitmap != null) {
+//                        Log.d("DUPA", "wkladam sciagniete");
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        entry.setImage(bitmap);
+                        bitmap = null;
+                    }
+                    else {
+//                        Log.d("DUPA", "wkladam ikonke");
+                        dbHandler.updateImage(entry.getNewsId(), bos.toByteArray());
+                        entry.setImage(img);
+                    }
+                    dbHandler.addRecord(entry);
+                }
             }
 
 
@@ -138,6 +189,25 @@ public class SplashScreen extends Activity {
 
             // close this activity
             finish();
+        }
+
+        private Bitmap downloadBitmap(String picUrl){
+            HttpURLConnection conn = null;
+            Bitmap bitmap = null;
+            try {
+                URL url = new URL(picUrl);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+//            conn.getContentLength(); //size of downloaded data
+                bitmap = BitmapFactory.decodeStream(is);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
         }
     }
 }

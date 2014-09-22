@@ -38,12 +38,14 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
         ImageView image = (ImageView)convertView.findViewById(R.id.imgIcon);
         TextView title = (TextView)convertView.findViewById(R.id.txtTitle);
         TextView summary = (TextView)convertView.findViewById(R.id.txtSummary);
+        TextView date = (TextView)convertView.findViewById(R.id.txtDate);
 
         Entry entry = data.get(position);
 
+        DBHandler dbHandler = new DBHandler(getContext());
         //Log.d("DUPA", "Link: " + entry.getLink());
-        //ArticleDownloader articleDownloader = new ArticleDownloader(entry.getLink(), convertView, R.id.imgIcon);
-        //articleDownloader.execute();
+//        ArticleDownloader articleDownloader = new ArticleDownloader(dbHandler, entry, convertView, R.id.imgIcon);
+//        articleDownloader.execute();
 
         title.setText(entry.getTitle());
 
@@ -51,7 +53,7 @@ public class CustomListAdapter extends ArrayAdapter<Entry> {
             title.setTextColor(context.getResources().getColor(R.color.pink));
 
         summary.setText(Html.fromHtml(entry.getSummary()));
-        //image.setImageResource(R.drawable.ic_launcher);
+        date.setText(Html.fromHtml(entry.getUpdated().substring(0, 10)));
         image.setImageBitmap(entry.getBitmap());
 
         return convertView;
